@@ -13,6 +13,21 @@
     </div>
 </div>
 
+<div class="modal fade" id="commanModelTwo" tabindex="-1" aria-labelledby="exampleModalLabelTwo" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabelTwo">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="render-data">
+                  
+                  
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--Loader-->
 <div id="loader" class="loader-wrapper" style="display: none;">
     <span class="site-loader"> </span>

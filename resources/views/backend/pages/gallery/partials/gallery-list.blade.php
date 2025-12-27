@@ -2,6 +2,7 @@
     <thead class="thead-light">
         <tr>
             <th>Title</th>
+            <th>Album Name</th>
             <th>Image</th>
             <th>Status</th>
             <th>Actions</th>
@@ -12,9 +13,10 @@
             @foreach($galleryList as $gallery)
                 <tr>
                     <td>{{ $gallery->title ?? '-' }}</td>
+                    <td>{{ $gallery->album->title ?? '-' }}</td>
                     <td>
-                        @if($gallery->image)
-                            <img src="{{ asset('upload/gallery/' . $gallery->image) }}" width="100" alt="{{ $gallery->title }}">
+                        @if($gallery->gallery_image)
+                            <img class="img-thumbnail" src="{{ asset('storage/gallery/' . $gallery->gallery_image) }}" width="60" alt="{{ $gallery->title }}">
                         @else
                             -
                         @endif
@@ -42,7 +44,7 @@
                             <form action="{{ route('manage-gallery.destroy', $gallery->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger show_confirm" data-name="{{ $gallery->title }}" title="Delete">
+                                <button type="submit" class="btn btn-sm btn-danger show_confirm_gallery_delete" data-name="{{ $gallery->title }}" title="Delete">
                                     <i data-feather="trash-2" class="feather-trash-2"></i>
                                 </button>
                             </form>
@@ -58,5 +60,5 @@
     </tbody>
 </table>
 <div class="my-pagination mt-3 mb-3" id="blog-list-pagination">
-    {{ $galleryList->links('vendor.pagination.bootstrap-4') }}
+    {{ $galleryList->links('vendor.pagination.bootstrap-5') }}
 </div> 

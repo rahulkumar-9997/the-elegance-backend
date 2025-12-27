@@ -5,7 +5,11 @@ use App\Http\Controllers\Backend\LoginController;
 use App\Http\Controllers\Backend\ForgotPasswordController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\CacheController;
-
+use  App\Http\Controllers\Backend\BannerController;
+use App\Http\Controllers\Backend\AlbumController;
+use App\Http\Controllers\Backend\GalleryController;
+use App\Http\Controllers\Backend\NearByPlaceController;
+use App\Http\Controllers\Backend\FlyersController;
 
 Route::prefix('admin')->group(function () {   
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login'); 
@@ -20,10 +24,19 @@ Route::prefix('admin')->group(function () {
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/get-daily-visitors', [DashboardController::class, 'getDailyVisitors'])->name('get-daily-visitors');      
+    Route::get('/get-daily-visitors', [DashboardController::class, 'getDailyVisitors'])->name('get-daily-visitors');    
    
     Route::get('/clear-cache', [CacheController::class, 'clearCache'])->name('clear-cache');
-   
-    
+    Route::resource('manage-banner', BannerController::class);
+    Route::resource('manage-album', AlbumController::class);
+    Route::resource('manage-gallery', GalleryController::class);   
+    Route::resource('manage-near-by-place', NearByPlaceController::class);   
+    Route::prefix('manage-near-by-place')->group(function () {
+        Route::post('/{id}/order-up', [NearByPlaceController::class, 'orderUp'])->name('manage-near-by-place.order-up');
+        Route::post('/{id}/order-down', [NearByPlaceController::class, 'orderDown'])->name('manage-near-by-place.order-down');
+        Route::post('/{id}/add-to-attractions', [NearByPlaceController::class, 'addToAttractions'])->name('manage-near-by-place.add-to-attractions');
+        Route::put('/{id}/remove-from-attractions', [NearByPlaceController::class, 'removeFromAttractions'])->name('manage-near-by-place.remove-from-attractions');
+    });
+    Route::resource('manage-flyers', FlyersController::class);
 });
 

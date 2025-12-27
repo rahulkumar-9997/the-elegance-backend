@@ -16,16 +16,16 @@ $(document).ready(function () {
             url: url,
             action: action
         };
-        $("#commanModel .modal-title").html(title);
-        $("#commanModel .modal-dialog").addClass('modal-' + size);
+        $("#commanModelTwo .modal-title").html(title);
+        $("#commanModelTwo .modal-dialog").addClass('modal-' + size);
 
         $.ajax({
             url: url,
             type: 'GET',
             data: data,
             success: function (data) {
-                $('#commanModel .render-data').html(data.form);
-                $("#commanModel").modal('show');
+                $('#commanModelTwo .render-data').html(data.form);
+                $("#commanModelTwo").modal('show');
                 
             },
             error: function (data) {
@@ -55,7 +55,7 @@ $(document).ready(function () {
                     $('.display-gallery-list-html').html(response.galleryListData);
                     feather.replace();
                     form[0].reset();
-                    $('#commanModel').modal('hide');
+                    $('#commanModelTwo').modal('hide');
                     Toastify({
                         text: response.message,
                         duration: 10000,
@@ -109,15 +109,13 @@ $(document).ready(function () {
         };
         $("#commanModel .modal-title").html(title);
         $("#commanModel .modal-dialog").addClass('modal-' + size);
-
         $.ajax({
             url: url,
             type: 'GET',
             data: data,
             success: function (data) {
                 $('#commanModel .render-data').html(data.form);
-                $("#commanModel").modal('show');
-                
+                $("#commanModel").modal('show');                
             },
             error: function (data) {
                 data = data.responseJSON;
@@ -178,7 +176,7 @@ $(document).ready(function () {
         });
     });
 
-    $(document).on('click', '.show_confirm', function (e) {
+    $(document).on('click', '.show_confirm_gallery_delete', function (e) {
         e.preventDefault();
         var form = $(this).closest('form');
         var albumName = $(this).data('name');
