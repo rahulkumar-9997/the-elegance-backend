@@ -1,7 +1,6 @@
 @extends('backend.layouts.master')
 @section('title','Flyers List')
 @push('styles')
-
 @endpush
 @section('main-content')
 <div class="content">
