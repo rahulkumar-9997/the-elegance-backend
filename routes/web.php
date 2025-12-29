@@ -14,6 +14,7 @@ use App\Http\Controllers\Backend\BanquetsController;
 use App\Http\Controllers\Backend\BanquetsImagesController;
 use App\Http\Controllers\Backend\TafriImagesController;
 use App\Http\Controllers\Backend\TestimonialsController;
+use App\Http\Controllers\Backend\FacilitiesController;
 
 Route::prefix('admin')->group(function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -66,4 +67,5 @@ Route::group(['middleware' => ['auth']], function () {
             ->name('manage-tafri-lounge-image.order-down');
     });
     Route::resource('manage-testimonials', TestimonialsController::class);
+    Route::resource('manage-facilities', FacilitiesController::class);
 });
