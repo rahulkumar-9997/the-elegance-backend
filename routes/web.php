@@ -13,6 +13,7 @@ use App\Http\Controllers\Backend\FlyersController;
 use App\Http\Controllers\Backend\BanquetsController;
 use App\Http\Controllers\Backend\BanquetsImagesController;
 use App\Http\Controllers\Backend\TafriImagesController;
+use App\Http\Controllers\Backend\TestimonialsController;
 
 Route::prefix('admin')->group(function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -64,4 +65,5 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/{id}/order-down', [TafriImagesController::class, 'orderDown'])
             ->name('manage-tafri-lounge-image.order-down');
     });
+    Route::resource('manage-testimonials', TestimonialsController::class);
 });

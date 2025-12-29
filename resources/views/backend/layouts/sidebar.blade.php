@@ -98,6 +98,20 @@
                         <li><a href="{{ route('manage-banquets.index') }}">Banquets Images</a></li>
                      </ul>
                   </li>
+                  <li class="submenu {{ request()->routeIs('manage-testimonials.*') ? 'active' : '' }}">
+                     <a href="javascript:void(0);" class="firsta">
+                        @if(request()->routeIs('manage-testimonials.*'))
+                        <span class="shape1"></span>
+                        <span class="shape2"></span>
+                        @endif
+                        <i class="ti ti-brand-dingtalk fs-18 me-2 text-warning"></i>
+                        <span>Manage Testimonials</span>
+                        <span class="menu-arrow"></span>
+                     </a>
+                     <ul style="{{ request()->routeIs('manage-testimonials.*') ? 'display:block;' : '' }}">
+                        <li><a href="{{ route('manage-testimonials.index') }}">Testimonials</a></li>
+                     </ul>
+                  </li>
                   <li class="{{ request()->routeIs('manage-tafri-lounge-image.*') ? 'active' : '' }}">
                      <a href="{{ route('manage-tafri-lounge-image.index') }}" class="firsta">
                         @if(request()->routeIs('manage-tafri-lounge-image.*'))
