@@ -29,26 +29,23 @@ class FacilitiesController extends Controller
                     <div class="col-md-12">
                         <div class="mb-3">
                             <label class="form-label">Title <span class="text-danger">*</span></label>
-                            <input type="text" name="title" class="form-control" placeholder="e.g., Swimming Pool" required>
-                            <div class="invalid-feedback" id="title_error"></div>
+                            <input type="text" name="title" id="title" class="form-control" placeholder="e.g., Swimming Pool">
                         </div>
                     </div>
                     
                     <div class="col-md-12">
                         <div class="mb-3">
                             <label class="form-label">Short Description</label>
-                            <textarea name="short_desc" rows="3" class="form-control" placeholder="Brief description of the facility"></textarea>
-                            <div class="invalid-feedback" id="short_desc_error"></div>
+                            <textarea name="short_desc" rows="3" class="form-control" placeholder="Brief description of the facility" id="short_desc"></textarea>
                         </div>
                     </div>
                     
                     <div class="col-md-12">
                         <div class="mb-3">
                             <label class="form-label">Facility Image <span class="text-danger">*</span></label>
-                            <input type="file" name="image" class="form-control" accept="image/jpeg,image/png,image/webp" required>
+                            <input type="file" id="image" name="image" class="form-control" accept="image/jpeg,image/png,image/webp">
                             <div class="invalid-feedback" id="image_error"></div>
                             <small class="text-muted">Supported formats: JPG, PNG, WEBP. Max size: 6MB</small>
-                            <!-- Image preview container -->
                             <div id="image-preview-container" class="mt-2"></div>
                         </div>
                     </div>
@@ -166,16 +163,14 @@ class FacilitiesController extends Controller
                     <div class="col-md-12">
                         <div class="mb-3">
                             <label class="form-label">Title <span class="text-danger">*</span></label>
-                            <input type="text" name="title" class="form-control" value="' . htmlspecialchars($facility->title) . '" required>
-                            <div class="invalid-feedback" id="title_error"></div>
+                            <input type="text" name="title" class="form-control" value="' . htmlspecialchars($facility->title) . '" id="title">
                         </div>
                     </div>
                     
                     <div class="col-md-12">
                         <div class="mb-3">
                             <label class="form-label">Short Description</label>
-                            <textarea name="short_desc" rows="3" class="form-control">' . htmlspecialchars($facility->short_desc) . '</textarea>
-                            <div class="invalid-feedback" id="short_desc_error"></div>
+                            <textarea name="short_desc" rows="3" class="form-control" id="short_desc">' . htmlspecialchars($facility->short_desc) . '</textarea>
                         </div>
                     </div>
                     
@@ -187,7 +182,7 @@ class FacilitiesController extends Controller
                             }
                             $form .= '
                             <label class="form-label">Change Image (Optional)</label>
-                            <input type="file" name="image" class="form-control" accept="image/jpeg,image/png,image/webp">
+                            <input type="file" name="image" class="form-control" accept="image/jpeg,image/png,image/webp" id="image">
                             <div class="invalid-feedback" id="image_error"></div>
                             <small class="text-muted">Leave empty to keep current image. Supported formats: JPG, PNG, WEBP. Max size: 6MB</small>
                         </div>

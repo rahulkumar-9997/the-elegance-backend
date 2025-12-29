@@ -17,6 +17,7 @@
          <ul>
             <li class="submenu-open">
                <ul>
+                  
                   <li class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
                      <a href="{{ route('dashboard') }}" class="firsta">
                         @if(request()->routeIs('dashboard'))
@@ -27,6 +28,7 @@
                         <span>Dashboard</span>
                      </a>
                   </li>
+
                   <li class="submenu {{ request()->routeIs('manage-banner.*') ? 'active' : '' }}">
                      <a href="javascript:void(0);" class="firsta">
                         @if(request()->routeIs('manage-banner.*'))
@@ -35,12 +37,13 @@
                         @endif
                         <i class="ti ti-photo fs-18 me-2 text-warning"></i>
                         <span>Manage Banner</span>
-                        <span class="menu-arrow"></span>
+                        <span class="menu-arrow {{ request()->routeIs('manage-banner.*') ? 'down' : '' }}"></span>
                      </a>
                      <ul style="{{ request()->routeIs('manage-banner.*') ? 'display:block;' : '' }}">
                         <li><a href="{{ route('manage-banner.index') }}">Banner</a></li>
                      </ul>
                   </li>
+
                   <li class="submenu {{ request()->routeIs('manage-album.*', 'manage-gallery.*') ? 'active' : '' }}">
                      <a href="javascript:void(0);" class="firsta">
                         @if(request()->routeIs('manage-album.*', 'manage-gallery.*'))
@@ -49,13 +52,14 @@
                         @endif
                         <i class="ti ti-library-photo fs-18 me-2 text-success"></i>
                         <span>Manage Gallery</span>
-                        <span class="menu-arrow"></span>
+                        <span class="menu-arrow {{ request()->routeIs('manage-album.*', 'manage-gallery.*') ? 'down' : '' }}"></span>
                      </a>
                      <ul style="{{ request()->routeIs('manage-album.*', 'manage-gallery.*') ? 'display:block;' : '' }}">
                         <li><a href="{{ route('manage-album.index') }}">Album</a></li>
                         <li><a href="{{ route('manage-gallery.index') }}">Gallery</a></li>
                      </ul>
                   </li>
+
                   <li class="submenu {{ request()->routeIs('manage-near-by-place.*') ? 'active' : '' }}">
                      <a href="javascript:void(0);" class="firsta">
                         @if(request()->routeIs('manage-near-by-place.*'))
@@ -64,12 +68,13 @@
                         @endif
                         <i class="ti ti-map-pin fs-18 me-2 text-danger"></i>
                         <span>Manage Near By Place</span>
-                        <span class="menu-arrow"></span>
+                        <span class="menu-arrow {{ request()->routeIs('manage-near-by-place.*') ? 'down' : '' }}"></span>
                      </a>
                      <ul style="{{ request()->routeIs('manage-near-by-place.*') ? 'display:block;' : '' }}">
                         <li><a href="{{ route('manage-near-by-place.index') }}">Near by Place</a></li>
                      </ul>
                   </li>
+
                   <li class="submenu {{ request()->routeIs('manage-flyers.*') ? 'active' : '' }}">
                      <a href="javascript:void(0);" class="firsta">
                         @if(request()->routeIs('manage-flyers.*'))
@@ -78,12 +83,13 @@
                         @endif
                         <i class="ti ti-file-text fs-18 me-2 text-info"></i>
                         <span>Manage Flyers</span>
-                        <span class="menu-arrow"></span>
+                        <span class="menu-arrow {{ request()->routeIs('manage-flyers.*') ? 'down' : '' }}"></span>
                      </a>
                      <ul style="{{ request()->routeIs('manage-flyers.*') ? 'display:block;' : '' }}">
                         <li><a href="{{ route('manage-flyers.index') }}">Flyers</a></li>
                      </ul>
                   </li>
+
                   <li class="submenu {{ request()->routeIs('manage-banquets.*') ? 'active' : '' }}">
                      <a href="javascript:void(0);" class="firsta">
                         @if(request()->routeIs('manage-banquets.*'))
@@ -92,12 +98,13 @@
                         @endif
                         <i class="ti ti-building-community fs-18 me-2 text-purple"></i>
                         <span>Manage Banquets</span>
-                        <span class="menu-arrow"></span>
+                        <span class="menu-arrow {{ request()->routeIs('manage-banquets.*') ? 'down' : '' }}"></span>
                      </a>
                      <ul style="{{ request()->routeIs('manage-banquets.*') ? 'display:block;' : '' }}">
                         <li><a href="{{ route('manage-banquets.index') }}">Banquets Images</a></li>
                      </ul>
                   </li>
+
                   <li class="submenu {{ request()->routeIs('manage-testimonials.*') ? 'active' : '' }}">
                      <a href="javascript:void(0);" class="firsta">
                         @if(request()->routeIs('manage-testimonials.*'))
@@ -106,12 +113,14 @@
                         @endif
                         <i class="ti ti-brand-dingtalk fs-18 me-2 text-warning"></i>
                         <span>Manage Testimonials</span>
-                        <span class="menu-arrow"></span>
+                        <span class="menu-arrow {{ request()->routeIs('manage-testimonials.*') ? 'down' : '' }}"></span>
                      </a>
                      <ul style="{{ request()->routeIs('manage-testimonials.*') ? 'display:block;' : '' }}">
                         <li><a href="{{ route('manage-testimonials.index') }}">Testimonials</a></li>
                      </ul>
                   </li>
+
+                  
                   <li class="submenu {{ request()->routeIs('manage-facilities.*') ? 'active' : '' }}">
                      <a href="javascript:void(0);" class="firsta">
                         @if(request()->routeIs('manage-facilities.*'))
@@ -120,17 +129,18 @@
                         @endif
                         <i class="ti ti-businessplan fs-18 me-2 text-success"></i>
                         <span>Manage Facilities</span>
-                        <span class="menu-arrow"></span>
+                        <span class="menu-arrow {{ request()->routeIs('manage-facilities.*') ? 'down' : '' }}"></span>
                      </a>
                      <ul style="{{ request()->routeIs('manage-facilities.*') ? 'display:block;' : '' }}">
                         <li><a href="{{ route('manage-facilities.index') }}">Facilities</a></li>
                      </ul>
                   </li>
+
                   <li class="{{ request()->routeIs('manage-tafri-lounge-image.*') ? 'active' : '' }}">
                      <a href="{{ route('manage-tafri-lounge-image.index') }}" class="firsta">
                         @if(request()->routeIs('manage-tafri-lounge-image.*'))
-                           <span class="shape1"></span>
-                           <span class="shape2"></span>
+                        <span class="shape1"></span>
+                        <span class="shape2"></span>
                         @endif
                         <i class="ti ti-live-photo fs-18 me-2 text-primary"></i>
                         <span>Manage Tafri Lounge Image</span>
@@ -139,7 +149,6 @@
                </ul>
             </li>
          </ul>
-
       </div>
    </div>
 </div>

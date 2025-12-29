@@ -27,65 +27,55 @@ class TestimonialsController extends Controller
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label">Title <span class="text-danger">*</span></label>
-                            <input type="text" name="title" class="form-control" placeholder="Excellent" required>
-                            <div class="invalid-feedback" id="title_error"></div>
+                            <input type="text" name="title" class="form-control" placeholder="Excellent" id="title">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label">Guest Type</label>
-                            <input type="text" name="guest_type" class="form-control" placeholder="Guests">
-                            <div class="invalid-feedback" id="guest_type_error"></div>
+                            <input type="text" name="guest_type" class="form-control" placeholder="Guests" id="guest_type">
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="mb-3">
                             <label class="form-label">Date Visited</label>
-                            <input type="text" name="visit_date" class="form-control datepicker" placeholder="Select visit date"
+                            <input type="text" name="visit_date" class="form-control datepicker" placeholder="Select visit date" id="visit_date"
                             autocomplete="off" id="basic-datepicker">
-                            <div class="invalid-feedback" id="visit_date_error"></div>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="mb-3">
                             <label class="form-label">Review</label>
-                            <textarea name="review_text" rows="4" class="form-control"></textarea>
-                            <div class="invalid-feedback" id="review_text_error"></div>
+                            <textarea name="review_text" rows="4" class="form-control" id="review_text"></textarea>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Value</label>
-                        <input type="number" step="0.1" max="5" min="0" name="value_rating" class="form-control">
-                        <div class="invalid-feedback" id="value_rating_error"></div>
+                        <input type="number" step="0.1" max="5" min="0" name="value_rating" class="form-control" id="value_rating">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Rooms</label>
-                        <input type="number" step="0.1" max="5" min="0" name="rooms_rating" class="form-control">
-                        <div class="invalid-feedback" id="rooms_rating_error"></div>
+                        <input type="number" step="0.1" max="5" min="0" name="rooms_rating" class="form-control" id="rooms_rating">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Location</label>
-                        <input type="number" step="0.1" max="5" min="0" name="location_rating" class="form-control">
-                        <div class="invalid-feedback" id="location_rating_error"></div>
+                        <input type="number" step="0.1" max="5" min="0" name="location_rating" class="form-control" id="location_rating">
                     </div>
                     <div class="col-md-4 mt-2">
                         <label class="form-label">Cleanliness</label>
-                        <input type="number" step="0.1" max="5" min="0" name="cleanliness_rating" class="form-control">
-                        <div class="invalid-feedback" id="cleanliness_rating_error"></div>
+                        <input type="number" step="0.1" max="5" min="0" name="cleanliness_rating" class="form-control" id="cleanliness_rating">
                     </div>
                     <div class="col-md-4 mt-2">
                         <label class="form-label">Service</label>
-                        <input type="number" step="0.1" max="5" min="0" name="service_rating" class="form-control">
-                        <div class="invalid-feedback" id="service_rating_error"></div>
+                        <input type="number" step="0.1" max="5" min="0" name="service_rating" class="form-control" id="service_rating">
                     </div>
                     <div class="col-md-4 mt-2">
                         <label class="form-label">Sleep Quality</label>
-                        <input type="number" step="0.1" max="5" min="0" name="sleep_quality_rating" class="form-control">
-                        <div class="invalid-feedback" id="sleep_quality_rating_error"></div>
+                        <input type="number" step="0.1" max="5" min="0" name="sleep_quality_rating" class="form-control" id="sleep_quality_rating">
                     </div>
                     <div class="col-md-12 mt-3">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" name="status" value="1" checked>
+                            <input class="form-check-input" type="checkbox" name="status" value="1" checked id="status">
                             <label class="form-check-label">Active</label>
                         </div>
                     </div>
@@ -208,15 +198,14 @@ class TestimonialsController extends Controller
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label">Title <span class="text-danger">*</span></label>
-                            <input type="text" name="title" class="form-control" value="' . htmlspecialchars($testimonial->title) . '" required>
+                            <input type="text" name="title" class="form-control" value="' . htmlspecialchars($testimonial->title) . '" id="title">
                             <div class="invalid-feedback" id="title_error"></div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label">Guest Type</label>
-                            <input type="text" name="guest_type" class="form-control" value="' . htmlspecialchars($testimonial->guest_type) . '">
-                            <div class="invalid-feedback" id="guest_type_error"></div>
+                            <input type="text" name="guest_type" class="form-control" value="' . htmlspecialchars($testimonial->guest_type) . '" id="guest_type">
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -224,50 +213,42 @@ class TestimonialsController extends Controller
                             <label class="form-label">Date Visited</label>
                             <input type="text" name="visit_date" class="form-control datepicker" 
                                 value="' . ($testimonial->visit_date ? date('Y-m-d', strtotime($testimonial->visit_date)) : '') . '"
-                                placeholder="Select visit date" autocomplete="off" id="basic-datepicker-edit">
-                            <div class="invalid-feedback" id="visit_date_error"></div>
+                                placeholder="Select visit date" autocomplete="off" id="basic-datepicker-edit" id="visit_date">
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="mb-3">
                             <label class="form-label">Review</label>
-                            <textarea name="review_text" rows="4" class="form-control">' . htmlspecialchars($testimonial->review_text) . '</textarea>
-                            <div class="invalid-feedback" id="review_text_error"></div>
+                            <textarea name="review_text" rows="4" class="form-control" id="review_text">' . htmlspecialchars($testimonial->review_text) . '</textarea>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Value</label>
-                        <input type="number" step="0.1" max="5" min="0" name="value_rating" class="form-control" value="' . $testimonial->value_rating . '">
-                        <div class="invalid-feedback" id="value_rating_error"></div>
+                        <input type="number" step="0.1" max="5" min="0" name="value_rating" class="form-control" value="' . $testimonial->value_rating . '" id="value_rating">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Rooms</label>
-                        <input type="number" step="0.1" max="5" min="0" name="rooms_rating" class="form-control" value="' . $testimonial->rooms_rating . '">
-                        <div class="invalid-feedback" id="rooms_rating_error"></div>
+                        <input type="number" step="0.1" max="5" min="0" name="rooms_rating" class="form-control" value="' . $testimonial->rooms_rating . '" id="rooms_rating">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Location</label>
-                        <input type="number" step="0.1" max="5" min="0" name="location_rating" class="form-control" value="' . $testimonial->location_rating . '">
-                        <div class="invalid-feedback" id="location_rating_error"></div>
+                        <input type="number" step="0.1" max="5" min="0" name="location_rating" class="form-control" value="' . $testimonial->location_rating . '" id="location_rating">
                     </div>
                     <div class="col-md-4 mt-2">
                         <label class="form-label">Cleanliness</label>
-                        <input type="number" step="0.1" max="5" min="0" name="cleanliness_rating" class="form-control" value="' . $testimonial->cleanliness_rating . '">
-                        <div class="invalid-feedback" id="cleanliness_rating_error"></div>
+                        <input type="number" step="0.1" max="5" min="0" name="cleanliness_rating" class="form-control" value="' . $testimonial->cleanliness_rating . '" id="cleanliness_rating">
                     </div>
                     <div class="col-md-4 mt-2">
                         <label class="form-label">Service</label>
-                        <input type="number" step="0.1" max="5" min="0" name="service_rating" class="form-control" value="' . $testimonial->service_rating . '">
-                        <div class="invalid-feedback" id="service_rating_error"></div>
+                        <input type="number" step="0.1" max="5" min="0" name="service_rating" class="form-control" value="' . $testimonial->service_rating . '" id="service_rating">
                     </div>
                     <div class="col-md-4 mt-2">
                         <label class="form-label">Sleep Quality</label>
-                        <input type="number" step="0.1" max="5" min="0" name="sleep_quality_rating" class="form-control" value="' . $testimonial->sleep_quality_rating . '">
-                        <div class="invalid-feedback" id="sleep_quality_rating_error"></div>
+                        <input type="number" step="0.1" max="5" min="0" name="sleep_quality_rating" class="form-control" value="' . $testimonial->sleep_quality_rating . '" id="sleep_quality_rating">
                     </div>
                     <div class="col-md-12 mt-3">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" name="status" value="1" ' . ($testimonial->status == 1 ? 'checked' : '') . '>
+                            <input class="form-check-input" type="checkbox" name="status" value="1" ' . ($testimonial->status == 1 ? 'checked' : '') . ' id="status">
                             <label class="form-check-label">Active</label>
                         </div>
                     </div>
