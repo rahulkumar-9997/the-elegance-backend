@@ -6,7 +6,7 @@ $.ajaxSetup({
 
 var site_url = $('meta[name="base-url"]').attr("content");
 $(document).ready(function () {
-    $(document).on("click", 'a[data-ajax-flyers-add-popup="true"]', function () {
+    $(document).on("click", 'a[data-ajax-banquets-add-popup="true"]', function () {
         var title = $(this).data("title");
         var data_action = $(this).data("action");
         var size = $(this).data("size") == "" ? "md" : $(this).data("size");
@@ -35,7 +35,7 @@ $(document).ready(function () {
         });
     });
 
-    $(document).off("submit", "#flyersAddForm").on("submit", "#flyersAddForm", function (event) {
+    $(document).off("submit", "#banquetsAddForm").on("submit", "#banquetsAddForm", function (event) {
         event.preventDefault();
         var form = $(this);
         var submitButton = form.find('button[type="submit"]');
@@ -59,7 +59,7 @@ $(document).ready(function () {
                 if (response.status === true) {
                     form[0].reset();
                     $("#commanModel").modal("hide");
-                    $(".display-flyers-list-html").html(response.html);
+                    $(".display-banquets-list-html").html(response.html);
                     feather.replace();
                     Toastify({
                         text: response.message,
@@ -143,7 +143,7 @@ $(document).ready(function () {
                     submitButton.prop("disabled", false).html("Update");
                     if (response.status === true) {
                         $("#commanModel").modal("hide");
-                            $(".display-flyers-list-html").html(response.html);
+                            $(".display-banquets-list-html").html(response.html);
                             feather.replace();
                             Toastify({
                                 text: response.message,
@@ -210,7 +210,7 @@ $(document).ready(function () {
                 var response = result.value;
 
                 if (response.status === true) {
-                    $(".display-flyers-list-html").html(response.html);
+                    $(".display-banquets-list-html").html(response.html);
                     feather.replace();
                     Toastify({
                         text: response.message,
@@ -233,4 +233,6 @@ $(document).ready(function () {
             }
         });
     });
+
+    
 });

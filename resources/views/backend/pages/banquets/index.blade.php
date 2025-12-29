@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section('title','Flyers List')
+@section('title','Banquets List')
 @push('styles')
 @endpush
 @section('main-content')
@@ -7,31 +7,31 @@
     <div class="page-header">
         <div class="add-item d-flex">
             <div class="page-title">
-                <h4 class="fw-bold">Flyers List</h4>
+                <h4 class="fw-bold">Banquets List</h4>
             </div>
         </div>
-        <div class="page-btn">
+        <!-- <div class="page-btn">
              <a  href="javascript:void(0)" 
-                data-ajax-flyers-add-popup="true"
+                data-ajax-banquets-add-popup="true"
                 data-size="lg" 
-                data-title="Add new Flyers" 
-                data-url="{{ route('manage-flyers.create') }}" 
+                data-title="Add new Banquets" 
+                data-url="{{ route('manage-banquets.create') }}" 
                 data-bs-toggle="tooltip" 
-                title="Add new Flyers"  
+                title="Add new Banquets"  
                 class="btn btn-primary">
                 <i class="ti ti-circle-plus me-1"></i>
-                Add New Flyers
+                Add New Banquets
             </a>
-        </div>
+        </div> -->
     </div>
 
     <!-- /product list -->
     <div class="card">
         <div class="card-body p-0">
             <div class="table-responsive">
-                <div class="display-flyers-list-html">
-                    @if(isset($flyersList) && $flyersList->count() > 0)
-                        @include('backend.pages.flyers.partials.flyers-list', ['flyersList' => $flyersList])
+                <div class="display-banquets-list-html">
+                    @if(isset($banquetList) && $banquetList->count() > 0)
+                        @include('backend.pages.banquets.partials.banquets-list', ['banquetList' => $banquetList])
                     @endif
                 </div>
             </div>
@@ -44,5 +44,6 @@
 <!-- modal--->
 @endsection
 @push('scripts')
-<script src="{{asset('backend/assets/js/pages/flyers.js')}}" type="text/javascript"></script>
+<script src="{{asset('backend/assets/js/pages/banquets.js')}}" type="text/javascript"></script>
+<script src="{{asset('backend/assets/js/pages/banquets-images-ajax.js')}}" type="text/javascript"></script>
 @endpush

@@ -20,20 +20,20 @@
                   <li class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
                      <a href="{{ route('dashboard') }}" class="firsta">
                         @if(request()->routeIs('dashboard'))
-                              <span class="shape1"></span>
-                              <span class="shape2"></span>
+                        <span class="shape1"></span>
+                        <span class="shape2"></span>
                         @endif
-                        <i class="ti ti-layout-grid fs-16 me-2"></i>
+                        <i class="ti ti-dashboard fs-18 me-2 text-primary"></i>
                         <span>Dashboard</span>
                      </a>
                   </li>
                   <li class="submenu {{ request()->routeIs('manage-banner.*') ? 'active' : '' }}">
                      <a href="javascript:void(0);" class="firsta">
                         @if(request()->routeIs('manage-banner.*'))
-                              <span class="shape1"></span>
-                              <span class="shape2"></span>
+                        <span class="shape1"></span>
+                        <span class="shape2"></span>
                         @endif
-                        <i class="ti ti-brand-appgallery fs-16 me-2"></i>
+                        <i class="ti ti-photo fs-18 me-2 text-warning"></i>
                         <span>Manage Banner</span>
                         <span class="menu-arrow"></span>
                      </a>
@@ -44,10 +44,10 @@
                   <li class="submenu {{ request()->routeIs('manage-album.*', 'manage-gallery.*') ? 'active' : '' }}">
                      <a href="javascript:void(0);" class="firsta">
                         @if(request()->routeIs('manage-album.*', 'manage-gallery.*'))
-                           <span class="shape1"></span>
-                           <span class="shape2"></span>
+                        <span class="shape1"></span>
+                        <span class="shape2"></span>
                         @endif
-                        <i class="ti ti-brand-appgallery fs-16 me-2"></i>
+                        <i class="ti ti-library-photo fs-18 me-2 text-success"></i>
                         <span>Manage Gallery</span>
                         <span class="menu-arrow"></span>
                      </a>
@@ -55,39 +55,63 @@
                         <li><a href="{{ route('manage-album.index') }}">Album</a></li>
                         <li><a href="{{ route('manage-gallery.index') }}">Gallery</a></li>
                      </ul>
-                  </li>      
+                  </li>
                   <li class="submenu {{ request()->routeIs('manage-near-by-place.*') ? 'active' : '' }}">
                      <a href="javascript:void(0);" class="firsta">
-                        @if(request()->routeIs('manage-location.*')) 
-                           <span class="shape1"></span>
-                           <span class="shape2"></span>
+                        @if(request()->routeIs('manage-near-by-place.*'))
+                        <span class="shape1"></span>
+                        <span class="shape2"></span>
                         @endif
-                        <i class="ti ti-brand-appgallery fs-16 me-2"></i>
+                        <i class="ti ti-map-pin fs-18 me-2 text-danger"></i>
                         <span>Manage Near By Place</span>
                         <span class="menu-arrow"></span>
                      </a>
                      <ul style="{{ request()->routeIs('manage-near-by-place.*') ? 'display:block;' : '' }}">
                         <li><a href="{{ route('manage-near-by-place.index') }}">Near by Place</a></li>
                      </ul>
-                  </li>  
-                  
+                  </li>
                   <li class="submenu {{ request()->routeIs('manage-flyers.*') ? 'active' : '' }}">
                      <a href="javascript:void(0);" class="firsta">
-                        @if(request()->routeIs('manage-flyers.*')) 
-                           <span class="shape1"></span>
-                           <span class="shape2"></span>
+                        @if(request()->routeIs('manage-flyers.*'))
+                        <span class="shape1"></span>
+                        <span class="shape2"></span>
                         @endif
-                        <i class="ti ti-brand-appgallery fs-16 me-2"></i>
+                        <i class="ti ti-file-text fs-18 me-2 text-info"></i>
                         <span>Manage Flyers</span>
                         <span class="menu-arrow"></span>
                      </a>
                      <ul style="{{ request()->routeIs('manage-flyers.*') ? 'display:block;' : '' }}">
                         <li><a href="{{ route('manage-flyers.index') }}">Flyers</a></li>
                      </ul>
-                  </li>  
+                  </li>
+                  <li class="submenu {{ request()->routeIs('manage-banquets.*') ? 'active' : '' }}">
+                     <a href="javascript:void(0);" class="firsta">
+                        @if(request()->routeIs('manage-banquets.*'))
+                        <span class="shape1"></span>
+                        <span class="shape2"></span>
+                        @endif
+                        <i class="ti ti-building-community fs-18 me-2 text-purple"></i>
+                        <span>Manage Banquets</span>
+                        <span class="menu-arrow"></span>
+                     </a>
+                     <ul style="{{ request()->routeIs('manage-banquets.*') ? 'display:block;' : '' }}">
+                        <li><a href="{{ route('manage-banquets.index') }}">Banquets Images</a></li>
+                     </ul>
+                  </li>
+                  <li class="{{ request()->routeIs('manage-tafri-lounge-image.*') ? 'active' : '' }}">
+                     <a href="{{ route('manage-tafri-lounge-image.index') }}" class="firsta">
+                        @if(request()->routeIs('manage-tafri-lounge-image.*'))
+                           <span class="shape1"></span>
+                           <span class="shape2"></span>
+                        @endif
+                        <i class="ti ti-live-photo fs-18 me-2 text-primary"></i>
+                        <span>Manage Tafri Lounge Image</span>
+                     </a>
+                  </li>
                </ul>
             </li>
          </ul>
+
       </div>
    </div>
 </div>
