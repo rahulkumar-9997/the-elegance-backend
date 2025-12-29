@@ -16,8 +16,7 @@
       <div id="sidebar-menu" class="sidebar-menu">
          <ul>
             <li class="submenu-open">
-               <ul>
-                  
+               <ul>                  
                   <li class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
                      <a href="{{ route('dashboard') }}" class="firsta">
                         @if(request()->routeIs('dashboard'))
