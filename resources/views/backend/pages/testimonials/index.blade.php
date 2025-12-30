@@ -31,8 +31,8 @@
         <div class="card-body p-0">
             <div class="table-responsive">
                 <div class="display-gallery-list-html">
-                    @if(isset($facilityList) && $facilityList->count() > 0)
-                        @include('backend.pages.facilities.partials.facilities-list', ['facilityList' => $facilityList])
+                    @if(isset($testimonialList) && $testimonialList->count() > 0)
+                        @include('backend.pages.testimonials.partials.testimonials-list', ['testimonialList' => $testimonialList])
                     @endif
                 </div>
             </div>
