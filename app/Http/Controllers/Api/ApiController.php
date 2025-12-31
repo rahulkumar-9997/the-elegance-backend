@@ -7,6 +7,8 @@ use App\Models\Banner;
 use App\Models\NearByPlace;
 use App\Models\Flyer;
 use App\Models\Testimonial;
+use App\Models\Banquet;
+use App\Models\BanquetImage;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -33,12 +35,13 @@ class ApiController extends Controller
 
     public function nearPlaceHome()
     {
-        $nearByPlaces = NearByPlace::where('status', 1)->where('attractions_status', 0)
+        $nearByPlaces = NearByPlace::where('status', 1)
             ->orderBy('order')
             ->limit(8)
             ->get([
                 'id',
                 'title',
+				'slug',
                 'short_desc',
                 'long_description',
                 'image',
@@ -65,6 +68,7 @@ class ApiController extends Controller
             ->get([
                 'id',
                 'title',
+				'slug',
                 'short_desc',
                 'long_description',
                 'image',
@@ -171,7 +175,6 @@ class ApiController extends Controller
     {
         try {
             $nearByPlaces = NearByPlace::where('status', 1)
-                ->where('attractions_status', 0)
                 ->orderBy('order')
                 ->get([
                     'id',
@@ -278,6 +281,99 @@ class ApiController extends Controller
             return response()->json([
                 'status'  => false,
                 'message' => 'Unable to fetch nearby place details at the moment.',
+                'data'    => null
+            ], 500);
+        }
+    }
+
+    public function onexBanquet()
+    {
+        try {
+            $banquet = Banquet::where('slug', 'onex-banquet')
+                ->with(['images' => function ($query) {
+                    $query->orderBy('order');
+                }])
+                ->first();
+            if (!$banquet) {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'Banquet not found.',
+                    'data'    => null
+                ], 404);
+            }
+            $images = $banquet->images->map(function ($image) {
+                return [
+                    'id'=> $image->id,
+                    'image_url' => asset('storage/banquets/' . $image->image_file),
+                ];
+            });
+            return response()->json([
+                'status' => true,
+                'data'   => [
+                    'id'          => $banquet->id,
+                    'title'       => $banquet->title,
+                    'slug'        => $banquet->slug,
+                    'description' => $banquet->description ?? null,
+                    'images'      => $images,
+                ]
+            ], 200);
+
+        } catch (\Throwable $e) {
+            Log::error('Banquet Details API Error', [
+                'message' => $e->getMessage(),
+                'file'    => $e->getFile(),
+                'line'    => $e->getLine(),
+            ]);
+            return response()->json([
+                'status'  => false,
+                'message' => 'Unable to fetch banquet details at the moment.',
+                'data'    => null
+            ], 500);
+        }
+    }
+
+
+    public function sapphireBanquet()
+    {
+        try {
+            $banquet = Banquet::where('slug', 'sapphire-banquet')
+                ->with(['images' => function ($query) {
+                    $query->orderBy('order');
+                }])
+                ->first();
+            if (!$banquet) {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'Banquet not found.',
+                    'data'    => null
+                ], 404);
+            }
+            $images = $banquet->images->map(function ($image) {
+                return [
+                    'id'=> $image->id,
+                    'image_url' => asset('storage/banquets/' . $image->image_file),
+                ];
+            });
+            return response()->json([
+                'status' => true,
+                'data'   => [
+                    'id'          => $banquet->id,
+                    'title'       => $banquet->title,
+                    'slug'        => $banquet->slug,
+                    'description' => $banquet->description ?? null,
+                    'images'      => $images,
+                ]
+            ], 200);
+
+        } catch (\Throwable $e) {
+            Log::error('Banquet Details API Error', [
+                'message' => $e->getMessage(),
+                'file'    => $e->getFile(),
+                'line'    => $e->getLine(),
+            ]);
+            return response()->json([
+                'status'  => false,
+                'message' => 'Unable to fetch banquet details at the moment.',
                 'data'    => null
             ], 500);
         }
