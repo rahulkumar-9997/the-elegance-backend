@@ -8,3 +8,5 @@ Route::get('near-place-home', [ApiController::class, 'nearPlaceHome']);
 Route::get('attraction-home', [ApiController::class, 'attractionHome']);
 Route::get('flyers-home', [ApiController::class, 'flyersHome']);
 Route::get('testimonials-home', [ApiController::class, 'testimonialsHome']);
+Route::get('near-by-pace-list', [ApiController::class, 'nearByPlaceList']);
+Route::get('near-by-pace-list/{slug}', [ApiController::class, 'nearByPlaceDetails']);

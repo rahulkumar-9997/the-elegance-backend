@@ -9,6 +9,7 @@ use App\Models\Flyer;
 use App\Models\Testimonial;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ApiController extends Controller
 {
@@ -164,5 +165,121 @@ class ApiController extends Controller
             'count' => $data->count(),
             'data' => $data
         ]);
+    }
+
+    public function nearByPlaceList()
+    {
+        try {
+            $nearByPlaces = NearByPlace::where('status', 1)
+                ->where('attractions_status', 0)
+                ->orderBy('order')
+                ->get([
+                    'id',
+                    'title',
+                    'slug',
+                    'short_desc',
+                    'long_description',
+                    'image',
+                    'meta_title',
+                    'meta_description'
+                ]);
+            if ($nearByPlaces->isEmpty()) {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'No nearby places found.',
+                    'count'   => 0,
+                    'data'    => []
+                ], 404);
+            }
+            $nearByPlaces->transform(function ($item) {
+                $item->image_url = asset('storage/nearby-places/' . $item->image);
+                unset($item->image);
+                return $item;
+            });
+            return response()->json([
+                'status' => true,
+                'count'  => $nearByPlaces->count(),
+                'data'   => $nearByPlaces
+            ], 200);
+
+        } catch (\Throwable $e) {
+            Log::error('NearByPlace API Error', [
+                'message' => $e->getMessage(),
+                'file'    => $e->getFile(),
+                'line'    => $e->getLine(),
+            ]);
+            return response()->json([
+                'status'  => false,
+                'message' => 'Unable to fetch nearby places at the moment.',
+                'data'    => []
+            ], 500);
+        }
+    }
+
+    public function nearByPlaceDetails($slug)
+    {
+        try {
+            if (empty($slug)) {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'Invalid place identifier.',
+                    'data'    => null
+                ], 400);
+            }
+            $nearByPlace = NearByPlace::where('slug', $slug)
+                ->where('status', 1)
+                ->first([
+                    'id',
+                    'title',
+                    'slug',
+                    'short_desc',
+                    'long_description',
+                    'image',
+                    'meta_title',
+                    'meta_description'
+                ]);
+            if (!$nearByPlace) {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'Nearby place not found.',
+                    'data'    => null
+                ], 404);
+            }
+            $nearByPlace->image_url = asset('storage/nearby-places/' . $nearByPlace->image);
+            unset($nearByPlace->image);
+            $recentPosts = NearByPlace::where('status', 1)
+                ->where('slug', '!=', $slug)
+                ->orderByDesc('id')
+                ->limit(4)
+                ->get([
+                    'id',
+                    'title',
+                    'slug',
+                    'short_desc',
+                    'image'
+                ]);
+            $recentPosts->transform(function ($item) {
+                $item->image_url = asset('storage/nearby-places/' . $item->image);
+                unset($item->image);
+                return $item;
+            });
+            return response()->json([
+                'status'       => true,
+                'data'         => $nearByPlace,
+                'recent_posts' => $recentPosts
+            ], 200);
+        } catch (\Throwable $e) {
+            Log::error('NearByPlace Details API Error', [
+                'slug'    => $slug,
+                'message' => $e->getMessage(),
+                'file'    => $e->getFile(),
+                'line'    => $e->getLine(),
+            ]);
+            return response()->json([
+                'status'  => false,
+                'message' => 'Unable to fetch nearby place details at the moment.',
+                'data'    => null
+            ], 500);
+        }
     }
 }
