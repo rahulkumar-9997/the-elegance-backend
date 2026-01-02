@@ -12,3 +12,4 @@ Route::get('near-by-pace-list', [ApiController::class, 'nearByPlaceList']);
 Route::get('near-by-pace-list/{slug}', [ApiController::class, 'nearByPlaceDetails']);
 Route::get('banquets/onex-banquet', [ApiController::class, 'onexBanquet']);
 Route::get('banquets/sapphire-banquet', [ApiController::class, 'sapphireBanquet']);
+Route::get('tafri-lounge-image', [ApiController::class, 'tafriLoungeImages']);

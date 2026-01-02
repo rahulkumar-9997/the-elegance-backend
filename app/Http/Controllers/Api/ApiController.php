@@ -9,6 +9,7 @@ use App\Models\Flyer;
 use App\Models\Testimonial;
 use App\Models\Banquet;
 use App\Models\BanquetImage;
+use App\Models\TafriLoungeImage;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -332,7 +333,6 @@ class ApiController extends Controller
         }
     }
 
-
     public function sapphireBanquet()
     {
         try {
@@ -378,4 +378,46 @@ class ApiController extends Controller
             ], 500);
         }
     }
+
+    public function tafriLoungeImages()
+    {
+        try {
+            $tafriImageList = TafriLoungeImage::orderBy('order')->get();
+            if ($tafriImageList->isEmpty()) {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'No Tafri lounge images found.',
+                    'data'    => []
+                ], 404);
+            }
+            $images = $tafriImageList->map(function ($image) {
+                return [
+                    'id'        => $image->id,
+                    'title'     => $image->title,
+                    'order'     => $image->order,
+                    'image_url' => asset('storage/tafri/' . $image->image_file),
+                ];
+            });
+            return response()->json([
+                'status' => true,
+                'data'   => [
+                    'total_images' => $images->count(),
+                    'images'       => $images,
+                ]
+            ], 200);
+
+        } catch (\Throwable $e) {
+            Log::error('Tafri Lounge Images API Error', [
+                'message' => $e->getMessage(),
+                'file'    => $e->getFile(),
+                'line'    => $e->getLine(),
+            ]);
+            return response()->json([
+                'status'  => false,
+                'message' => 'Unable to fetch Tafri lounge images at the moment.',
+                'data'    => null
+            ], 500);
+        }
+    }
+
 }
