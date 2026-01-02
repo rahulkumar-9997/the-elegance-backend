@@ -11,6 +11,8 @@ use App\Models\Banquet;
 use App\Models\BanquetImage;
 use App\Models\TafriLoungeImage;
 use App\Models\Facility;
+use App\Models\Album;
+use App\Models\Gallery;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -43,7 +45,7 @@ class ApiController extends Controller
             ->get([
                 'id',
                 'title',
-				'slug',
+                'slug',
                 'short_desc',
                 'long_description',
                 'image',
@@ -70,7 +72,7 @@ class ApiController extends Controller
             ->get([
                 'id',
                 'title',
-				'slug',
+                'slug',
                 'short_desc',
                 'long_description',
                 'image',
@@ -125,7 +127,7 @@ class ApiController extends Controller
             $visitDate = $t->visit_date
                 ? Carbon::parse($t->visit_date)->format('F Y')
                 : null;
-            $ratingPercent = fn ($rating) => $rating ? ($rating / 5) * 100 : 0;
+            $ratingPercent = fn($rating) => $rating ? ($rating / 5) * 100 : 0;
             return [
                 'id' => $t->id,
                 'title' => $t->title,
@@ -206,7 +208,6 @@ class ApiController extends Controller
                 'count'  => $nearByPlaces->count(),
                 'data'   => $nearByPlaces
             ], 200);
-
         } catch (\Throwable $e) {
             Log::error('NearByPlace API Error', [
                 'message' => $e->getMessage(),
@@ -305,7 +306,7 @@ class ApiController extends Controller
             }
             $images = $banquet->images->map(function ($image) {
                 return [
-                    'id'=> $image->id,
+                    'id' => $image->id,
                     'image_url' => asset('storage/banquets/' . $image->image_file),
                 ];
             });
@@ -319,7 +320,6 @@ class ApiController extends Controller
                     'images'      => $images,
                 ]
             ], 200);
-
         } catch (\Throwable $e) {
             Log::error('Banquet Details API Error', [
                 'message' => $e->getMessage(),
@@ -351,7 +351,7 @@ class ApiController extends Controller
             }
             $images = $banquet->images->map(function ($image) {
                 return [
-                    'id'=> $image->id,
+                    'id' => $image->id,
                     'image_url' => asset('storage/banquets/' . $image->image_file),
                 ];
             });
@@ -365,7 +365,6 @@ class ApiController extends Controller
                     'images'      => $images,
                 ]
             ], 200);
-
         } catch (\Throwable $e) {
             Log::error('Banquet Details API Error', [
                 'message' => $e->getMessage(),
@@ -406,7 +405,6 @@ class ApiController extends Controller
                     'images'       => $images,
                 ]
             ], 200);
-
         } catch (\Throwable $e) {
             Log::error('Tafri Lounge Images API Error', [
                 'message' => $e->getMessage(),
@@ -447,7 +445,6 @@ class ApiController extends Controller
                     'facilities'       => $data,
                 ]
             ], 200);
-
         } catch (\Throwable $e) {
             Log::error('Facilities API Error', [
                 'message' => $e->getMessage(),
@@ -463,5 +460,77 @@ class ApiController extends Controller
         }
     }
 
+    public function albumGallery(Request $request)
+    {
+        try {
+            $albums = Album::where('status', 1)
+                ->orderBy('id', 'asc')
+                ->get();
+            if ($albums->isEmpty()) {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'No albums found.',
+                    'data'    => []
+                ], 404);
+            }
+            if ($request->filled('album_id')) {
+                $selectedAlbum = $albums->where('id', $request->album_id)->first();
+
+                if (!$selectedAlbum) {
+                    return response()->json([
+                        'status'  => false,
+                        'message' => 'Album not found.',
+                        'data'    => null
+                    ], 404);
+                }
+            } else {
+                $selectedAlbum = $albums->first();
+            }
+            $galleries = Gallery::where('album_id', $selectedAlbum->id)
+                ->orderBy('id', 'asc')
+                ->get();
+            $albumList = $albums->map(function ($album) use ($selectedAlbum) {
+                return [
+                    'id'        => $album->id,
+                    'title'     => $album->title,
+                    'is_active' => $album->id === $selectedAlbum->id,
+                ];
+            });
+            $images = $galleries->map(function ($gallery) {
+                return [
+                    'id'          => $gallery->id,
+                    'title'       => $gallery->title,
+                    'description' => $gallery->description,
+                    'image_url'   => asset('storage/gallery/' . $gallery->gallery_image),
+                ];
+            });
+
+            return response()->json([
+                'status' => true,
+                'data'   => [
+                    'albums' => $albumList,
+                    'selected_album' => [ 
+                        'id'          => $selectedAlbum->id,
+                        'title'       => $selectedAlbum->title,
+                        'description' => $selectedAlbum->description,
+                    ],
+                    'total_images' => $images->count(),
+                    'images'       => $images,
+                ]
+            ], 200);
+
+        } catch (\Throwable $e) {
+            Log::error('Album Gallery API Error', [
+                'message' => $e->getMessage(),
+                'file'    => $e->getFile(),
+                'line'    => $e->getLine(),
+            ]);
+            return response()->json([
+                'status'  => false,
+                'message' => 'Unable to fetch album gallery at the moment.',
+                'data'    => null
+            ], 500);
+        }
+    }
 
 }

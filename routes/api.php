@@ -14,3 +14,4 @@ Route::get('banquets/onex-banquet', [ApiController::class, 'onexBanquet']);
 Route::get('banquets/sapphire-banquet', [ApiController::class, 'sapphireBanquet']);
 Route::get('tafri-lounge-image', [ApiController::class, 'tafriLoungeImages']);
 Route::get('facilities', [ApiController::class, 'facilities']);
+Route::get('album-gallery', [ApiController::class, 'albumGallery']);
