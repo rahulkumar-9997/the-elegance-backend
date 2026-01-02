@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Controllers\Api\EnquiryController;
 
 Route::get('/banner/video', [ApiController::class, 'singleVideo']);
 Route::get('near-place-home', [ApiController::class, 'nearPlaceHome']);
@@ -15,3 +16,4 @@ Route::get('banquets/sapphire-banquet', [ApiController::class, 'sapphireBanquet'
 Route::get('tafri-lounge-image', [ApiController::class, 'tafriLoungeImages']);
 Route::get('facilities', [ApiController::class, 'facilities']);
 Route::get('album-gallery', [ApiController::class, 'albumGallery']);
+Route::post('/enquiry', [EnquiryController::class, 'store']);
