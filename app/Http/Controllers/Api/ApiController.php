@@ -10,6 +10,7 @@ use App\Models\Testimonial;
 use App\Models\Banquet;
 use App\Models\BanquetImage;
 use App\Models\TafriLoungeImage;
+use App\Models\Facility;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -419,5 +420,48 @@ class ApiController extends Controller
             ], 500);
         }
     }
+
+    public function facilities()
+    {
+        try {
+            $facilities = Facility::orderBy('id', 'desc')->get();
+            if ($facilities->isEmpty()) {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'No facilities found.',
+                    'data'    => []
+                ], 404);
+            }
+            $data = $facilities->map(function ($facility) {
+                return [
+                    'id'          => $facility->id,
+                    'title'       => $facility->title,
+                    'short_desc'  => $facility->short_desc,
+                    'image_url'   => asset('storage/facilities/' . $facility->image),
+                ];
+            });
+            return response()->json([
+                'status' => true,
+                'data'   => [
+                    'total_facilities' => $data->count(),
+                    'facilities'       => $data,
+                ]
+            ], 200);
+
+        } catch (\Throwable $e) {
+            Log::error('Facilities API Error', [
+                'message' => $e->getMessage(),
+                'file'    => $e->getFile(),
+                'line'    => $e->getLine(),
+            ]);
+
+            return response()->json([
+                'status'  => false,
+                'message' => 'Unable to fetch facilities at the moment.',
+                'data'    => null
+            ], 500);
+        }
+    }
+
 
 }
