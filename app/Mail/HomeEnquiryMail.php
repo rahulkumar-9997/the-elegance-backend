@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class EnquiryMail extends Mailable
+class HomeEnquiryMail extends Mailable
 {
     use Queueable, SerializesModels;
     public array $enquiry;
@@ -18,7 +18,7 @@ class EnquiryMail extends Mailable
     public function build()
     {
         return $this->subject('New Enquiry Received')
-            ->view('backend.mail.enquiry')
+            ->view('backend.mail.home-enquiry')
             ->with([
                 'enquiry' => $this->enquiry
             ]);

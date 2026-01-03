@@ -17,3 +17,10 @@ Route::get('tafri-lounge-image', [ApiController::class, 'tafriLoungeImages']);
 Route::get('facilities', [ApiController::class, 'facilities']);
 Route::get('album-gallery', [ApiController::class, 'albumGallery']);
 Route::post('/enquiry', [EnquiryController::class, 'store']);
+Route::get('home-enquiry', function () {
+    return response()->json([
+        'status'  => false,
+        'message' => 'Invalid request method. Please submit enquiry using POST request.'
+    ], 405);
+});
+Route::post('home-enquiry', [EnquiryController::class, 'homeEnquiryStore']);
