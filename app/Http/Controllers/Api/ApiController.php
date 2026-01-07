@@ -13,6 +13,7 @@ use App\Models\TafriLoungeImage;
 use App\Models\Facility;
 use App\Models\Album;
 use App\Models\Gallery;
+use App\Models\Blog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -532,5 +533,169 @@ class ApiController extends Controller
             ], 500);
         }
     }
+
+    public function homeBlog()
+    {
+        try {
+            $blogs = Blog::where('status', 'published')
+                ->orderBy('id', 'desc')
+                ->limit(4)
+                ->get();
+            if ($blogs->isEmpty()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'No blogs found',
+                    'data' => []
+                ], 404);
+            }
+            $data = $blogs->map(function ($blog) {
+                return [
+                    'id' => $blog->id,
+                    'title' => $blog->title,
+                    'slug' => $blog->slug,
+                    'short_desc' => $blog->short_desc,
+                    'featured_image' => $blog->featured_image
+                        ? asset('storage/blog/' . $blog->featured_image)
+                        : null,
+                    'created_at' => $blog->created_at->format('d M Y'),
+                ];
+            });
+            return response()->json([
+                'status' => true,
+                'data' => $data
+            ], 200);
+
+        } catch (\Throwable $e) {
+            Log::error('Home Blog API Error', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]);
+            return response()->json([
+                'status' => false,
+                'message' => 'Unable to fetch blogs',
+                'data' => null
+            ], 500);
+        }
+    }
+
+    public function blogList(Request $request)
+    {
+        try {
+            $perPage = $request->get('per_page', 10);
+
+            $blogs = Blog::where('status', 'published')
+                ->orderBy('id', 'desc')
+                ->paginate($perPage);
+
+            if ($blogs->isEmpty()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'No blogs found',
+                    'data' => []
+                ], 404);
+            }
+
+            $data = $blogs->getCollection()->map(function ($blog) {
+                return [
+                    'id' => $blog->id,
+                    'title' => $blog->title,
+                    'slug' => $blog->slug,
+                    'short_desc' => $blog->short_desc,
+                    'featured_image' => $blog->featured_image
+                        ? asset('storage/blog/' . $blog->featured_image)
+                        : null,
+                    'created_at' => $blog->created_at->format('d M Y'),
+                ];
+            });
+
+            return response()->json([
+                'status' => true,
+                'data' => $data,
+                'pagination' => [
+                    'current_page' => $blogs->currentPage(),
+                    'last_page' => $blogs->lastPage(),
+                    'per_page' => $blogs->perPage(),
+                    'total' => $blogs->total(),
+                    'has_more' => $blogs->hasMorePages(),
+                ]
+            ], 200);
+
+        } catch (\Throwable $e) {
+            Log::error('Blog List API Error', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]);
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Unable to fetch blogs',
+                'data' => null
+            ], 500);
+        }
+    }
+    
+    public function blogDetails($slug)
+    {
+        try {
+            $blog = Blog::with(['images', 'paragraphs'])
+                ->where('slug', $slug)
+                ->where('status', 'published')
+                ->first();
+            if (!$blog) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Blog not found',
+                    'data' => null
+                ], 404);
+            }
+            return response()->json([
+                'status' => true,
+                'data' => [
+                    'id' => $blog->id,
+                    'title' => $blog->title,
+                    'slug' => $blog->slug,
+                    'short_desc' => $blog->short_desc,
+                    'content' => $blog->content,
+                    'meta_title' => $blog->meta_title,
+                    'meta_description' => $blog->meta_description,
+                    'featured_image' => $blog->featured_image
+                        ? asset('storage/blog/' . $blog->featured_image)
+                        : null,
+                    'created_at' => $blog->created_at->format('d M Y'),
+
+                    'images' => $blog->images->map(fn ($img) => [
+                        'id' => $img->id,
+                        'image' => asset('storage/blog/' . $img->image),
+                        'alt' => $img->alt_text,
+                    ]),
+                    'paragraphs' => $blog->paragraphs->map(fn ($p) => [
+                        'title' => $p->title,
+                        'content' => $p->content,
+                        'image' => $p->image
+                            ? asset('storage/blog/' . $p->image)
+                            : null,
+                    ]),
+                ]
+            ], 200);
+
+        } catch (\Throwable $e) {
+            Log::error('Blog Details API Error', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]);
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Unable to fetch blog details',
+                'data' => null
+            ], 500);
+        }
+    }
+
+
+
 
 }

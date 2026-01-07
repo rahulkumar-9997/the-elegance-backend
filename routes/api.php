@@ -16,6 +16,9 @@ Route::get('banquets/sapphire-banquet', [ApiController::class, 'sapphireBanquet'
 Route::get('tafri-lounge-image', [ApiController::class, 'tafriLoungeImages']);
 Route::get('facilities', [ApiController::class, 'facilities']);
 Route::get('album-gallery', [ApiController::class, 'albumGallery']);
+Route::get('home-blog', [ApiController::class, 'homeBlog']);
+Route::get('blog', [ApiController::class, 'blogList']);
+Route::get('blog/{slug}', [ApiController::class, 'blogDetails']);
 Route::post('/enquiry', [EnquiryController::class, 'store']);
 Route::get('home-enquiry', function () {
     return response()->json([
@@ -24,3 +27,4 @@ Route::get('home-enquiry', function () {
     ], 405);
 });
 Route::post('home-enquiry', [EnquiryController::class, 'homeEnquiryStore']);
+

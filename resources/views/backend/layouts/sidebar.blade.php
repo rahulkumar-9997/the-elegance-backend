@@ -134,7 +134,20 @@
                         <li><a href="{{ route('manage-facilities.index') }}">Facilities</a></li>
                      </ul>
                   </li>
-
+                  <li class="submenu {{ request()->routeIs('manage-blog.*') ? 'active' : '' }}">
+                     <a href="javascript:void(0);" class="firsta">
+                        @if(request()->routeIs('manage-blog.*'))
+                        <span class="shape1"></span>
+                        <span class="shape2"></span>
+                        @endif
+                        <i class="ti ti-brand-blogger fs-18 me-2 text-success"></i>
+                        <span>Manage Blog</span>
+                        <span class="menu-arrow {{ request()->routeIs('manage-blog.*') ? 'down' : '' }}"></span>
+                     </a>
+                     <ul style="{{ request()->routeIs('manage-blog.*') ? 'display:block;' : '' }}">
+                        <li><a href="{{ route('manage-blog.index') }}">Blog</a></li>
+                     </ul>
+               </li>
                   <li class="{{ request()->routeIs('manage-tafri-lounge-image.*') ? 'active' : '' }}">
                      <a href="{{ route('manage-tafri-lounge-image.index') }}" class="firsta">
                         @if(request()->routeIs('manage-tafri-lounge-image.*'))

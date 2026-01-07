@@ -74,7 +74,7 @@
                                 name="main_image" id="main_image" />
                             @if($blog->featured_image)
                             <div class="mt-2">
-                                <img src="{{ asset('upload/blog/'.$blog->featured_image) }}" width="100" class="img-thumbnail">
+                                <img src="{{ asset('storage/blog/' . $blog->featured_image) }}" width="100" class="img-thumbnail">
                                 <input type="hidden" name="existing_main_image" value="{{ $blog->featured_image }}">
                             </div>
                             @endif
@@ -125,7 +125,7 @@
                         <div class="mt-2">
                             @foreach($blog->images as $image)
                             <div class="d-inline-block me-2 mb-2 position-relative">
-                                <img src="{{ asset('upload/blog/'.$image->image) }}" width="80" class="img-thumbnail">
+                                <img src="{{ asset('storage/blog/' . $image->image) }}" width="80" class="img-thumbnail">
                                 <input type="hidden" name="existing_more_images[]" value="{{ $image->id }}">
                                 <button type="button" class="btn btn-danger btn-xs position-absolute top-0 end-0 remove-image"
                                     data-image-id="{{ $image->id }}">×</button>
@@ -175,7 +175,7 @@
                                         <input type="file" name="paragraphs_image[]" class="form-control">
                                         @if($paragraph->image)
                                         <div class="mt-2">
-                                            <img src="{{ asset('upload/blog/'.$paragraph->image) }}" width="100">
+                                            <img src="{{ asset('storage/blog/' . $paragraph->image) }}" width="100" class="img-thumbnail">
                                             <input type="hidden" name="existing_paragraphs_image[]" value="{{ $paragraph->image }}">
                                         </div>
                                         @endif
@@ -223,6 +223,17 @@
         CKEDITOR.replace(el, {
             removePlugins: 'exportpdf'
         });
+    });
+    $(document).ready(function() {
+        $('#blogFormEdit').on('submit', function(e) {
+            $('#submitButton').prop('disabled', true);
+            $('#submitText').text('Submitting...');
+            $(this).find('button[type="submit"]').prop('disabled', true);
+        });
+        @if($errors->any())
+            $('#submitButton').prop('disabled', false);
+            $('#submitText').text('Submit');
+        @endif
     });
 </script>
 <script>

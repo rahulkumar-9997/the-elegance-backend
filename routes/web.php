@@ -1,20 +1,21 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Backend\LoginController;
-use App\Http\Controllers\Backend\ForgotPasswordController;
-use App\Http\Controllers\Backend\DashboardController;
-use App\Http\Controllers\Backend\CacheController;
-use  App\Http\Controllers\Backend\BannerController;
 use App\Http\Controllers\Backend\AlbumController;
-use App\Http\Controllers\Backend\GalleryController;
-use App\Http\Controllers\Backend\NearByPlaceController;
-use App\Http\Controllers\Backend\FlyersController;
+use App\Http\Controllers\Backend\BannerController;
 use App\Http\Controllers\Backend\BanquetsController;
 use App\Http\Controllers\Backend\BanquetsImagesController;
+use App\Http\Controllers\Backend\BlogController;
+use App\Http\Controllers\Backend\CacheController;
+use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\FacilitiesController;
+use App\Http\Controllers\Backend\FlyersController;
+use App\Http\Controllers\Backend\ForgotPasswordController;
+use App\Http\Controllers\Backend\GalleryController;
+use App\Http\Controllers\Backend\LoginController;
+use App\Http\Controllers\Backend\NearByPlaceController;
 use App\Http\Controllers\Backend\TafriImagesController;
 use App\Http\Controllers\Backend\TestimonialsController;
-use App\Http\Controllers\Backend\FacilitiesController;
+use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -57,10 +58,10 @@ Route::group(['middleware' => ['auth']], function () {
             ->name('manage-banquet-images.index');
         Route::delete('/{id}', [BanquetsImagesController::class, 'destroyImage'])
             ->name('manage-banquet-images.destroy');
-       
+
     });
     Route::resource('manage-tafri-lounge-image', TafriImagesController::class);
-    Route::prefix('tafri-lounge-images')->group(function () {        
+    Route::prefix('tafri-lounge-images')->group(function () {
         Route::post('/{id}/order-up', [TafriImagesController::class, 'orderUp'])
             ->name('manage-tafri-lounge-image.order-up');
         Route::post('/{id}/order-down', [TafriImagesController::class, 'orderDown'])
@@ -68,4 +69,5 @@ Route::group(['middleware' => ['auth']], function () {
     });
     Route::resource('manage-testimonials', TestimonialsController::class);
     Route::resource('manage-facilities', FacilitiesController::class);
+    Route::resource('manage-blog', BlogController::class);
 });

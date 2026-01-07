@@ -26,7 +26,7 @@
                 </td>
                 <td>
                     @if($blog->featured_image)
-                        <img src="{{ asset('upload/blog/' . $blog->featured_image) }}" alt="Banner Image" width="100">
+                        <img src="{{ asset('storage/blog/' . $blog->featured_image) }}" alt="Banner Image" width="100">
                     @endif
                 </td>
                 <td>

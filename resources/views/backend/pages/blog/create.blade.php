@@ -179,6 +179,17 @@
             removePlugins: 'exportpdf'
         });
     });
+    $(document).ready(function() {
+        $('#blogFormAdd').on('submit', function(e) {
+            $('#submitButton').prop('disabled', true);
+            $('#submitText').text('Submitting...');
+            $(this).find('button[type="submit"]').prop('disabled', true);
+        });
+        @if($errors->any())
+            $('#submitButton').prop('disabled', false);
+            $('#submitText').text('Submit');
+        @endif
+    });
 </script>
 <script>
 $(document).ready(function() {

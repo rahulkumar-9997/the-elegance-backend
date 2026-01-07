@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Enquiry;
 use App\Mail\EnquiryMail;
+use App\Mail\HomeEnquiryMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
@@ -30,7 +31,7 @@ class EnquiryController extends Controller
                 'ip'      => $request->ip(),
             ];
             Log::info('Enquiry received', $enquiry);
-            Mail::to('rahulkumarmaurya464@gmail.com')
+            Mail::to('akshat.gd@gmail.com', 'theelegance.kashi@gmail.com')
                 ->send(new EnquiryMail($enquiry));
             Log::info('Enquiry mail sent successfully');
             return response()->json([
@@ -64,8 +65,8 @@ class EnquiryController extends Controller
                 'phone'     => $validated['phone'],
             ];
             Log::info('Enquiry received', $enquiry);
-            Mail::to('rahulkumarmaurya464@gmail.com')
-                ->send(new EnquiryMail($enquiry));
+            Mail::to('akshat.gd@gmail.com', 'theelegance.kashi@gmail.com')
+                ->send(new HomeEnquiryMail($enquiry));
             return response()->json([
                 'status'  => true,
                 'message' => 'Enquiry submitted successfully'
@@ -78,7 +79,7 @@ class EnquiryController extends Controller
 
             return response()->json([
                 'status'  => false,
-                'message' => 'Failed to submit enquiry. Please try again.'
+                'message' => $e->getMessage(),
             ], 500);
         }
     }
