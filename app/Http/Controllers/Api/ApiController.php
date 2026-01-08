@@ -637,63 +637,93 @@ class ApiController extends Controller
     }
     
     public function blogDetails($slug)
-    {
-        try {
-            $blog = Blog::with(['images', 'paragraphs'])
-                ->where('slug', $slug)
-                ->where('status', 'published')
-                ->first();
-            if (!$blog) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Blog not found',
-                    'data' => null
-                ], 404);
-            }
-            return response()->json([
-                'status' => true,
-                'data' => [
-                    'id' => $blog->id,
-                    'title' => $blog->title,
-                    'slug' => $blog->slug,
-                    'short_desc' => $blog->short_desc,
-                    'content' => $blog->content,
-                    'meta_title' => $blog->meta_title,
-                    'meta_description' => $blog->meta_description,
-                    'featured_image' => $blog->featured_image
-                        ? asset('storage/blog/' . $blog->featured_image)
-                        : null,
-                    'created_at' => $blog->created_at->format('d M Y'),
+	{
+		try {
+			$blog = Blog::with(['images', 'paragraphs'])
+				->where('slug', $slug)
+				->where('status', 'published')
+				->first();
 
-                    'images' => $blog->images->map(fn ($img) => [
-                        'id' => $img->id,
-                        'image' => asset('storage/blog/' . $img->image),
-                        'alt' => $img->alt_text,
-                    ]),
-                    'paragraphs' => $blog->paragraphs->map(fn ($p) => [
-                        'title' => $p->title,
-                        'content' => $p->content,
-                        'image' => $p->image
-                            ? asset('storage/blog/' . $p->image)
-                            : null,
-                    ]),
-                ]
-            ], 200);
+			if (!$blog) {
+				return response()->json([
+					'status' => false,
+					'message' => 'Blog not found',
+					'data' => null
+				], 404);
+			}
 
-        } catch (\Throwable $e) {
-            Log::error('Blog Details API Error', [
-                'message' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-            ]);
+			$recentPosts = Blog::where('status', 'published')
+				->where('slug', '!=', $slug)
+				->inRandomOrder()
+				->limit(8)
+				->get([
+					'id',
+					'title',
+					'slug',
+					'short_desc',
+					'featured_image'
+				]);
 
-            return response()->json([
-                'status' => false,
-                'message' => 'Unable to fetch blog details',
-                'data' => null
-            ], 500);
-        }
-    }
+			$recentPosts->transform(function ($item) {
+				return [
+					'id' => $item->id,
+					'title' => $item->title,
+					'slug' => $item->slug,
+					'short_desc' => $item->short_desc,
+					'image_url' => $item->featured_image
+						? asset('storage/blog/' . $item->featured_image)
+						: null,
+				];
+			});
+
+			return response()->json([
+				'status' => true,
+				'data' => [
+					'id' => $blog->id,
+					'title' => $blog->title,
+					'slug' => $blog->slug,
+					'short_desc' => $blog->short_desc,
+					'content' => $blog->content,
+					'meta_title' => $blog->meta_title,
+					'meta_description' => $blog->meta_description,
+					'featured_image' => $blog->featured_image
+						? asset('storage/blog/' . $blog->featured_image)
+						: null,
+					'created_at' => optional($blog->created_at)->format('d M Y'),
+
+					'images' => $blog->images->map(fn ($img) => [
+						'id' => $img->id,
+						'image' => asset('storage/blog/' . $img->image),
+						'alt' => $img->alt_text,
+					]),
+
+					'paragraphs' => $blog->paragraphs->map(fn ($p) => [
+						'title' => $p->title,
+						'content' => $p->content,
+						'image' => $p->image
+							? asset('storage/blog/' . $p->image)
+							: null,
+					]),
+
+					'recent_posts' => $recentPosts,
+				]
+			], 200);
+
+		} catch (\Throwable $e) {
+			Log::error('Blog Details API Error', [
+				'message' => $e->getMessage(),
+				'file' => $e->getFile(),
+				'line' => $e->getLine(),
+			]);
+
+			return response()->json([
+				'status' => false,
+				'message' => 'Unable to fetch blog details',
+				'data' => null
+			], 500);
+		}
+	}
+
 
 
 
